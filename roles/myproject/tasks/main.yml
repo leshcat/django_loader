@@ -1,0 +1,30 @@
+---
+
+   - name: yolo cleanup
+     file: path="{{ destination }}" state=absent
+     with_items:
+       - ".git"
+       - "{{ project_name }}"
+
+   - name: Get da repo
+     git: repo={{ git_repo }} dest={{ destination }} clone=yes update=yes
+
+# 'django_manage' module is no good due 'runserver' "--runonbackground" type flag absense.   # In other words, playbook freezes as runserver doesnt run on background.
+#   - name: run da server
+#     django_manage: command='runserver 0.0.0.0:8000' app_path={{ destination }}{{ project_name }}
+
+   - name: run da server - shell method
+     shell: chdir="{{ destination }}{{ project_name }}" {{ item }}
+     with_items:
+       "nohup python manage.py runserver 0.0.0.0:8000 &"
+
+   - name: locate pids for termination
+     shell: ps aufxww | grep "runserver" | grep -v "grep" | awk {'print$2'} | xargs echo -n
+     register: pid_results
+   
+   - name: debugging  
+     debug: 
+       msg: "Pid results: {{ pid_results.stdout }}"
+
+   - name: smoke pids
+     shell: kill -9 {{ pid_results.stdout }}

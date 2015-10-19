@@ -1,0 +1,47 @@
+---
+
+#  - name: Creating Django mysql database and user
+#    mysql_db: name={{ db_name }} encoding=utf8 state=present
+
+#  - name: Creating Django mysql database user and granting rights
+#    mysql_user: name={{ db_user }} password={{ db_upass }} priv={{ db_name }}.*:ALL state=present
+
+#  - name: Reload privilege tables
+#    command: 'mysql -ne "{{ item }}"'
+#    with_items:
+#      - FLUSH PRIVILEGES
+
+#  - name: Create myproject folder
+#    file: path=/home/django/{{ project_name }} state=directory recurse=yes mode=0755
+
+#  - name: Creating virtualenv for "{{ project_name }}"
+#    command: virtualenv {{ project_virtualenv }} chdir=/home/django/{{ project_name }}    
+  
+#  - name: Installing Django and Mysqlclient to virtualenv space
+#    pip: name=django virtualenv=/home/django/{{ project_name }}/{{ project_virtualenv }}
+#    pip: name=mysqlclient virtualenv=/home/django/{{ project_name }}/{{ project_virtualenv }}
+
+#  - name: Creating actual Django project
+#    #command: source /home/django/{{ project_name }}/myprojectenv/bin/activate
+#    command: django-admin.py startproject myproject /home/django/{{ project_name }}
+ 
+#  - name: Changing settings.py to point to mysql db
+#    template: src='settings.py' dest='/home/django/{{ project_name }}/{{ project_name }}/settings.py'
+
+#  - name: Activating project
+#    django_manage: command=migrate app_path=/home/django/{{ project_name }}
+
+#  - name: Starting buildin web server
+#    django_manage: command='runserver 0.0.0.0:8000' app_path=/home/django/{{ project_name }}
+
+#   - name: yolo cleanup
+#     file: path="{{ destination }}" state=absent
+#     with_items:
+#       - ".git"
+#       - "{{ project_name }}"
+
+   - name: Get da repo
+     git: repo={{ git_repo }} dest={{ destination }} update=yes
+   
+   - name: run da server
+     django_manage: command='runserver 0.0.0.0:8000' app_path="{{ destination }}""{{ project_name }}"
