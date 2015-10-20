@@ -1,8 +1,8 @@
 ---
-# Installing django default project
+# Ansible Django project loader 
 
 - hosts: sat
   remote_user: root
 
   roles:
-    - myproject
+    - loader

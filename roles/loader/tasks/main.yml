@@ -1,0 +1,12 @@
+---
+
+   - fail: msg="This play requires 'project_name' set via vars or as --extra-vars."
+     when: (project_name == '')
+
+   - name: Ensuring destination folder is present.
+     file: path="{{ destination }}" state=directory recurse=yes
+
+   - include: cleanup.yml
+   
+   - include: run.yml
+     when: (projectrun == 'yes')

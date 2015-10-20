@@ -1,0 +1,9 @@
+# Project_name variable should be defined in any vars or via --extra-vars 
+project_name: ''
+
+git_repo: 'https://github.com/leshcat/django_project.git'
+
+destination: '/home/django/projects/'
+
+projectrun: 'yes'
+

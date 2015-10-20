@@ -1,0 +1,19 @@
+---
+
+   - name: Locating Django server(s) pids for termination if any.
+     shell: ps aufxww | grep "runserver" | grep -v "grep" | awk {'print$2'} | xargs echo -n
+     register: pid_results
+
+   - name: Checking pids.
+     debug:
+       msg: "Django server pids: {{ pid_results.stdout }}"
+
+   - name: Terminating Django server(s).
+     shell: kill -15 {{ pid_results.stdout }}
+     when: ("{{ pid_results.stdout }}" != '')
+
+   - name: Performing cleanup procedures.
+     file: path="{{ destination }}{{ item }}" state=absent
+     with_items:
+       - ".git"
+       - "{{ project_name }}"

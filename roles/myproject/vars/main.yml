@@ -1,8 +1,0 @@
-project_name: mysite
-git_repo: "https://github.com/leshcat/django_project.git"
-destination: "/home/django/projects/"
-
-#project_virtualenv: myprojectenv
-#db_name: myproject
-#db_user: myprojectuser
-#db_upass: password
