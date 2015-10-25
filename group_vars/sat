@@ -3,7 +3,12 @@ project_name: ''
 
 git_repo: 'https://github.com/leshcat/django_project.git'
 
-destination: '/home/django/projects/'
+server_port: '8000'
 
-projectrun: 'yes'
+destination: '/home/django/projects/new/'
 
+runcleaning: 'yes'
+
+runproject: 'yes'
+
+runtesting: 'yes'

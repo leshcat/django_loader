@@ -6,4 +6,4 @@
    - name: Starting Django development server.
      shell: chdir="{{ destination }}{{ project_name }}" {{ item }}
      with_items:
-       "nohup python manage.py runserver 0.0.0.0:8000 &"
+       "nohup python manage.py runserver 0.0.0.0:{{ server_port }} &"
