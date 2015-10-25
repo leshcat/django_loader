@@ -5,7 +5,7 @@ git_repo: 'https://github.com/leshcat/django_project.git'
 
 server_port: '8000'
 
-destination: '/home/django/projects/new/'
+destination: '/home/django/projects/'
 
 runcleaning: 'yes'
 

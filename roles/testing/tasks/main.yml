@@ -5,7 +5,7 @@
 #       msg: "{{ ansible_ssh_host }}"
 
    - name: GET request - Polling current votes.
-     uri: url="http://{{ ansible_ssh_host }}:8000/polls/1/results/" return_content=yes
+     uri: url="http://{{ ansible_ssh_host }}:{{ server_port }}/polls/1/results/" return_content=yes
      register: webpage
    
    - name: Debug - GET request.
@@ -14,7 +14,7 @@
 
    - name: POST request - Voting for 1st option. 
      uri:
-       url: "http://{{ ansible_ssh_host }}:8000/polls/1/vote/"
+       url: "http://{{ ansible_ssh_host }}:{{ server_port }}/polls/1/vote/"
        method: POST
        status_code: 302
        HEADER_Content-Type: "application/x-www-form-urlencoded"
@@ -23,7 +23,7 @@
 
    - name: POST request - Voting for 2nd option.
      uri:
-       url: "http://{{ ansible_ssh_host }}:8000/polls/1/vote/"
+       url: "http://{{ ansible_ssh_host }}:{{ server_port }}/polls/1/vote/"
        method: POST
        status_code: 302
        HEADER_Content-Type: "application/x-www-form-urlencoded"
@@ -32,10 +32,14 @@
        body: "csrfmiddlewaretoken=caEPKEXXcKsjJk08z57HppZVzr5kcJxm&choice=2"
 
    - name: GET request - checking votes results.
-     uri: url="http://{{ ansible_ssh_host }}:8000/polls/1/results/" return_content=yes
+     uri: url="http://{{ ansible_ssh_host }}:{{ server_port }}/polls/1/results/" return_content=yes
      register: webpage_after
 
    - name: Debug - GET request.
      debug:
        msg: "{{ webpage_after.content }}"
-
+  
+   - name: Information.
+     debug:
+       msg: "You can also visit http://{{ ansible_ssh_host }}:{{ server_port }}/polls/1/results/ via browser to see the results."
+ 
